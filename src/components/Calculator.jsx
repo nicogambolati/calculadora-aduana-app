@@ -1,64 +1,39 @@
 import { useEffect, useState } from "react";
-import DollarExchangeRate from "./DollarExchangeRate";
+
+// import  DollarExchangeRate  from "./DollarExchangeRate";
+import { Price } from "./Price";
+import { Shipping } from "./Shipping";
+import { Tax } from "./Tax";
 
 export const Calculator = () => {
   const [price, setPrice] = useState(0);
   const [shipping, setShipping] = useState(0);
   const [subTotal, setSubTotal] = useState(0);
   const [total, setTotal] = useState(0);
-  const [tax, settax] = useState(0);
+  const [tax, setTax] = useState(0);
 
   useEffect(() => {
     setSubTotal(price + shipping);
   }, [price, shipping]);
 
-  const calculateTax = () => {
-    let newtax = 0;
-    if (subTotal > 50) {
-      newtax = (subTotal - 50) * 0.5;
-    }
-
-    settax(newtax);
-    setTotal(subTotal + newtax);
-  };
-
   return (
-    <div>
-      <label>
-        Price:
-        <input
-          type="number"
-          value={price}
-          onChange={(e) => setPrice(parseInt(e.target.value))}
-        />
-      </label>
-      <br />
-      <label>
-        Shipping:
-        <input
-          type="number"
-          value={shipping}
-          onChange={(e) => setShipping(parseInt(e.target.value))}
-        />
-      </label>
-      <br />
-      <label>
-      SubTotal: ${subTotal}
-      </label>
-      <br />
-      <br />
-      <br />
-      <button onClick={calculateTax}>Calculate Tax</button>
-      <br />
-      <label>Tax: ${tax}</label>
-      <br />
-      <br />
-      <br />
-      Total: ${total}
-      <br />
-      <br />
-      <br />
-      <DollarExchangeRate />
+    <div className="card d-flex aligns-items-center justify-content-center card text-center w-50 mx-auto">
+      <div className="card-body">
+        <h2 className="card-title">Calculadora de Impuestos</h2>
+        <div className="card-text d-flex flex-column gap-3">
+          <Price price={price} setPrice={setPrice} />
+          <Shipping shipping={shipping} setShipping={setShipping} />
+          <h5 className="totals">SubTotal: ${subTotal}</h5>
+          <Tax
+            tax={tax}
+            setTax={setTax}
+            subTotal={subTotal}
+            setTotal={setTotal}
+          />
+          <h3>Total: ${total}</h3>
+        </div>
+        {/* <DollarExchangeRate /> */}
+      </div>
     </div>
   );
 };
