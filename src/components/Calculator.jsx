@@ -30,7 +30,8 @@ export const Calculator = () => {
             subTotal={subTotal}
             setTotal={setTotal}
           />
-          <h3>Total: ${total}</h3>
+          <h3>Total en dolares: ${total}</h3>
+          <h3>Total en pesos: ${total * 900.50}</h3>
         </div>
         {/* <DollarExchangeRate /> */}
       </div>
