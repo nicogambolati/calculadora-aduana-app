@@ -10,7 +10,7 @@ export const Tax = ({ tax, setTax, subTotal, setTotal }) => {
   };
   return (
     <div className="d-flex flex-column align-items-center gap-3 ">
-      <button onClick={calculateTax} className="btn btn-primary w-25">Calcular Impuesto</button>
+      <button onClick={calculateTax} className="btn btn-primary">Calcular Impuesto</button>
       <h6>Impuesto Aduanero: ${tax}</h6>
     </div>
   );

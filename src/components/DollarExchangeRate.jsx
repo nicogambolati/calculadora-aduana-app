@@ -25,7 +25,7 @@ export const DollarExchangeRate = () => {
   });
 
   return (
-    <div className="dollar-exchange">
+    <div className="col-12 col-md-6 dollar-exchange">
       <h2>Tipo de Cambio</h2>
       {exchange && exchange.length > 0 ? (
         exchange.map((rate) => (

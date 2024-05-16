@@ -1,12 +1,17 @@
 export const Price = ({ price, setPrice }) => {
   return (
-    <label>
-      Precio usd:
+    <div className="input-group mb-3">
+      <div className="input-group-prepend">
+        <span className="input-group-text">USD</span>
+      </div>
       <input
         type="number"
+        className="form-control"
+        aria-label="Amount (to the nearest dollar)"
         value={price}
-        onChange={(e) => setPrice(parseInt(e.target.value))}
+        onChange={(e) => setPrice(parseFloat(e.target.value))}
+        min="0"
       />
-    </label>
+    </div>
   );
 };

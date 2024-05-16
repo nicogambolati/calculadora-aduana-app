@@ -14,7 +14,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <h1 className="text-center">Calculadora de Impuestos</h1>
         <hr />
         <div className="row">
-          <div className="d-flex justify-content-center">
+          <div className="d-flex flex-column flex-md-row justify-content-center gap-3">
             <Calculator />
             <DollarExchangeRate />
           </div>

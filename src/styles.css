@@ -1,12 +1,9 @@
 body {
   background-color: #1b1b1f;
+  color: white;
 }
 
 .card {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   background-color: rgba(31, 41, 55, 1);
 
   .card-header,
