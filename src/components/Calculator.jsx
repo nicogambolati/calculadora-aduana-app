@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
-// import  DollarExchangeRate  from "./DollarExchangeRate";
 import { Price } from "./Price";
 import { Shipping } from "./Shipping";
 import { Tax } from "./Tax";
+import { DollarExchangeContext } from "../context/DollarExchangeContext";
 
 export const Calculator = () => {
   const [price, setPrice] = useState(0);
@@ -16,10 +16,19 @@ export const Calculator = () => {
     setSubTotal(price + shipping);
   }, [price, shipping]);
 
+  const { exchange } = useContext(DollarExchangeContext);
+
+  const tarjetaRate = exchange?.find((rate) => rate.casa === 'tarjeta');
+  const tarjetaVenta = tarjetaRate ? tarjetaRate.venta : 0;
+
+  // Calculate total in pesos using the formula: total * tarjetaVenta
+  const totalPesos = total * tarjetaVenta;
+  // Format totalPesos as a currency
+  const formattedTotalPesos = totalPesos.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
+
   return (
     <div className="card d-flex aligns-items-center justify-content-center card text-center w-50 mx-auto">
       <div className="card-body">
-        <h2 className="card-title">Calculadora de Impuestos</h2>
         <div className="card-text d-flex flex-column gap-3">
           <Price price={price} setPrice={setPrice} />
           <Shipping shipping={shipping} setShipping={setShipping} />
@@ -30,10 +39,12 @@ export const Calculator = () => {
             subTotal={subTotal}
             setTotal={setTotal}
           />
-          <h3>Total en dolares: ${total}</h3>
-          <h3>Total en pesos: ${total * 900.50}</h3>
+          <h3>Total en dolares: {total.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</h3>
+
+          <h3>Total en pesos (USD Tarjeta): {formattedTotalPesos}</h3>
+
         </div>
-        {/* <DollarExchangeRate /> */}
+        <hr />
       </div>
     </div>
   );

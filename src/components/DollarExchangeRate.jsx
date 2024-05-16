@@ -1,39 +1,47 @@
-import { useState, useEffect } from "react";
+import { useContext, useEffect } from "react";
+import { DollarExchangeContext } from "../context/DollarExchangeContext";
 
-function DollarExchangeRate() {
-  const [exchangeRate, setExchangeRate] = useState(null);
+export const DollarExchangeRate = () => {
+  const { exchange, setExchange } = useContext(DollarExchangeContext);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("https://dolarapi.com/v1/dolares");
-        const data = await response.json();
-        setExchangeRate(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+    setExchange(exchange);
+  }, [exchange]);
 
-    fetchData();
-  }, []);
+  // Check if exchange is not null and has at least one element
+  if (!exchange || exchange.length === 0) {
+    return <div>Loading...</div>; // or any other appropriate message or component
+  }
+
+  // Format the fechaActualizacion date
+  const formattedFechaActualizacion = new Date(
+    exchange[0].fechaActualizacion
+  ).toLocaleDateString("es-AR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+  });
 
   return (
-    <div>
-      <h2>Dollar Exchange Rate:</h2>
-      {exchangeRate && exchangeRate.length > 0 ? (
-        exchangeRate.map((rate) => (
+    <div className="dollar-exchange">
+      <h2>Tipo de Cambio</h2>
+      {exchange && exchange.length > 0 ? (
+        exchange.map((rate) => (
           <div key={rate.casa}>
-            <div className="d-flex">
-              <label>{rate.nombre}:</label>
-              <label>${rate.venta}</label>
+            <div className="d-flex ">
+              <h4>{rate.nombre}:</h4>
+              <h4>${rate.venta}</h4>
             </div>
+
+            <br />
           </div>
         ))
       ) : (
         <p>Loading...</p>
       )}
+      <h6>Fecha de actualizacion: {formattedFechaActualizacion}</h6>
     </div>
   );
-}
-
-export default DollarExchangeRate;
+};
